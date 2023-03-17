@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+    <h1>Lots</h1>
+
+    <form method="GET" asp-controller="Home" asp-action="CreateLot">
+        <button type="submit" class="btn btn-primary">Create Lot</button>
+    </form>
+
+
+    <div style="text-align:center">
+    @if ((ViewBag.Lots) != null)
+    {
+        <div class="dropdown d-none d-sm-inline-block form-inline">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Choose Currency
+            </button>
+            <ul class="dropdown-menu dropdown-menu-left">
+                @foreach (var item in ViewBag.Lots)
+                {
+                    <form method="POST">
+                    <li><button class="dropdown-item" asp-action="Index" asp-controller="Home" asp-route-id="@item.id">@item.lot.Currency</button></li>
+                    </form>
+                }
+            </ul>
+        </div>
+    }
+    </div>
+
+
+    <table class="table">
+        <tr>
+            <td>Lots</td>
+        </tr>
+
+        @foreach (var item in ViewBag.Lots)
+        {
+            <tr>
+            <td>@item.lot.Currency</td>
+            <td>@item.lot.Price</td>
+            <td>@item.lot.Salesman</td>
+                <td>
+                    <form method="GET" asp-controller="Home" asp-action="BuyLot" asp-route-id="@item.id">
+                        <button type="submit" class="btn btn-outline-warning">Buy</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+
+   
